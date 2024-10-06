@@ -82,9 +82,11 @@ public class DontSneakProgress {
                 player.setGameMode(PLAYER_GAME_MODE_MAP.getOrDefault(player.getUUID(), GameType.SURVIVAL));
             }
         } else {
+            String message = "There are not enough player online [%d/%d]".formatted(playerList.getPlayerCount(), Config.minOnlinePlayer);
             for (ServerPlayer player : playerList.getPlayers()) {
                 PLAYER_GAME_MODE_MAP.put(player.getUUID(), player.gameMode.getGameModeForPlayer());
                 player.setGameMode(GameType.ADVENTURE);
+                player.sendSystemMessage(Component.literal(message));
             }
         }
     }
