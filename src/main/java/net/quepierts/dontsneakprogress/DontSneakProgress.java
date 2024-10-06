@@ -84,7 +84,10 @@ public class DontSneakProgress {
         } else {
             String message = "There are not enough player online [%d/%d]".formatted(playerList.getPlayerCount(), Config.minOnlinePlayer);
             for (ServerPlayer player : playerList.getPlayers()) {
-                PLAYER_GAME_MODE_MAP.put(player.getUUID(), player.gameMode.getGameModeForPlayer());
+                GameType lastMode = player.gameMode.getGameModeForPlayer();
+                if (lastMode != GameType.ADVENTURE) {
+                    PLAYER_GAME_MODE_MAP.put(player.getUUID(), lastMode);
+                }
                 player.setGameMode(GameType.ADVENTURE);
                 player.sendSystemMessage(Component.literal(message));
             }
